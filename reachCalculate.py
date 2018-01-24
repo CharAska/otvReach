@@ -9,9 +9,10 @@ import re #正则表达式
 import time, sys #合法性验证
 #v0.21
 #判断使用期限是否超时
+'''
 if time.strftime('%Y-%m-%d',time.localtime(time.time())) > "2018-12-31":
     sys.exit()
-
+'''
 def vbaDownload():
     vba_exl = xlrd.open_workbook("vba.xlsm")
     file_opt = options = {}
