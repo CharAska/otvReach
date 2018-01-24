@@ -7,12 +7,12 @@ from tkinter import messagebox #消息框模块
 import tkinter.filedialog #文件导入模块
 import re #正则表达式
 import time, sys #合法性验证
-#v0.21
+
 #判断使用期限是否超时
-'''
+
 if time.strftime('%Y-%m-%d',time.localtime(time.time())) > "2018-12-31":
     sys.exit()
-'''
+
 def vbaDownload():
     vba_exl = xlrd.open_workbook("vba.xlsm")
     file_opt = options = {}
@@ -544,7 +544,7 @@ button_find.grid(row=8, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
 button_calculate.grid(row=8, column=3)
 # 进入消息循环
-ui_top.title('OTV项目Reach预估工具 Ver0.2')
+ui_top.title('OTV项目Reach预估工具 Ver0.22')
 label_sign = Label(ui_top, text="Ver0.2 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=8, column=1)
 ui_top.mainloop()
