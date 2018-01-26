@@ -44,6 +44,8 @@ def mod_mix():
     label_ott.grid(row=6, column=2)
     label_buff = Label(ui_top, text="", width=20)
     label_buff.grid(row=7, column=2)
+    label_buff = Label(ui_top, text="", width=20)
+    label_buff.grid(row=8, column=2)
 
     label_pc = Label(ui_top, text="", height=3, width=20)
     label_pc.grid(row=4, column=3)
@@ -53,19 +55,29 @@ def mod_mix():
     label_ott.grid(row=6, column=3)
     label_buff = Label(ui_top, text="", width=20)
     label_buff.grid(row=7, column=3)
+    label_buff = Label(ui_top, text="", width=20)
+    label_buff.grid(row=8, column=3)
 
 def mod_scale():
+    percentage_radio = IntVar()
+    percentage_radio.set(1)
+    radio_exe = Radiobutton(ui_top, text='直接输入比例', variable=percentage_radio, value=1, width=20,command=lambda: input_exe())
+    radio_exl = Radiobutton(ui_top, text='excel导入比例', variable=percentage_radio, value=2, width=20,command=lambda: input_exl())
+    radio_exe.grid(row=4, column=2)
+    radio_exl.grid(row=4, column=3)
+
+def input_exe():
     label_pc = Label(ui_top, text="PC曝光占比", height=3, width=20)
-    label_pc.grid(row=4, column=2)
+    label_pc.grid(row=5, column=2)
     label_mob = Label(ui_top, text="Mobile曝光占比", width=20)
-    label_mob.grid(row=5, column=2)
+    label_mob.grid(row=6, column=2)
     label_ott = Label(ui_top, text="OTT曝光占比", width=20)
-    label_ott.grid(row=6, column=2)
-    label_buff = Label(ui_top, text="设备比例浮动系数", width=20)
-    label_buff.grid(row=7, column=2)
+    label_ott.grid(row=7, column=2)
+    label_buff = Label(ui_top, text="设备比例浮动系数", width=20, height=3)
+    label_buff.grid(row=8, column=2)
 
     # e1 = StringVar()
-    global e1,e2,e3,e4
+    global e1,e2,e3,e4,ck_excel
     e1 = Variable()
     e2 = Variable()
     e3 = Variable()
@@ -75,14 +87,36 @@ def mod_scale():
     e3.set("填写正整数，如0-100")
     e4.set("填写小数，如0.0-1.0")
     entry_pc = Entry(ui_top, textvariable=e1, width=20)
-    entry_pc.grid(row=4, column=3)
+    entry_pc.grid(row=5, column=3)
     entry_mob = Entry(ui_top, textvariable=e2, width=20)
-    entry_mob.grid(row=5, column=3)
+    entry_mob.grid(row=6, column=3)
     entry_ott = Entry(ui_top, textvariable=e3, width=20)
-    entry_ott.grid(row=6, column=3)
+    entry_ott.grid(row=7, column=3)
     entry_buff = Entry(ui_top, textvariable=e4, width=20)
-    entry_buff.grid(row=7, column=3)
+    entry_buff.grid(row=8, column=3)
 
+def input_exl():
+    global e4_1
+    label_buff = Label(ui_top, text="设备比例浮动系数", width=20, height=3)
+    label_buff.grid(row=5, column=2)
+    e4_1 = Variable()
+    e4_1.set("填写小数，如0.0-1.0")
+    entry_buff = Entry(ui_top, textvariable=e4_1, width=20)
+    entry_buff.grid(row=5, column=3)
+
+    label_ott = Label(ui_top, text="", width=20)
+    label_ott.grid(row=6, column=2)
+    label_buff = Label(ui_top, text="", width=20)
+    label_buff.grid(row=7, column=2)
+    label_buff = Label(ui_top, text="", width=20)
+    label_buff.grid(row=8, column=2)
+
+    label_ott = Label(ui_top, text="", width=20)
+    label_ott.grid(row=6, column=3)
+    label_buff = Label(ui_top, text="", width=20)
+    label_buff.grid(row=7, column=3)
+    label_buff = Label(ui_top, text="", width=20)
+    label_buff.grid(row=8, column=3)
 
 def exlRead():
     # 完成后需要修改地址，可改成导入方式
@@ -99,7 +133,6 @@ def exlRead():
     print(curve_rows)
     print(curve_cols)
 
-
 def curveList():
     # 获取生成curve的List
     global reachCurve
@@ -109,7 +142,6 @@ def curveList():
         for j in range(curve_cols):
             row.append(table_reachCurve.cell(i, j).value)
         reachCurve.append(row)
-
 
 def targetDict():
     # 获取生成target的Dictionary和List
@@ -125,6 +157,10 @@ def targetDict():
     for i in range(1, target_rows):
         cityList.append(table_target.cell(i, 0).value)
     titleList = list(cityDict["城市"].keys())
+
+def cityCheck():
+    pass
+
 
 '''
 def impTo3plus():
@@ -153,7 +189,6 @@ def aTob(a1, a2, b1, b2):
                     reachCurve[i + 1][a2] - reachCurve[i][a2]) \
                                          / (reachCurve[i + 1][a1] - reachCurve[i][a1]) + reachCurve[i][a2]
                     break
-
 
 def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
     # 根据指定目标内容推到实际情况;a:目标内容(int)，b：实际情况(str）;求b2
@@ -205,6 +240,58 @@ def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                                                   reachCurve_filter[i][4]
                     break
 
+def aTob_scale_exl(a1, a2, b1, b2, buff):
+    #pc_mob, ott_mob, buff
+    # 根据指定目标内容推到实际情况;a:目标内容(int)，b：实际情况(str）;求b2
+    # mob_pc: mob除以pc的系数（float); mob_ott：mob除以ott的系数(float);buff(float,ex:0.2,表示±20%)
+    # 对曲线列表进行数据排除,pc2,mobile3,ott4
+    global reachCurve_filter
+    global curve_rows_filter
+
+    for city in cityList:
+        reachCurve_filter = []
+        reachCurve_filter.append(reachCurve[0])  # 添加title
+        pc_mob = cityDict[city]["排期PC占比"] / cityDict[city]["排期Mobile占比"]
+        ott_mob = cityDict[city]["排期OTT占比"] / cityDict[city]["排期Mobile占比"]
+        for i in range(1, curve_rows):
+            # 筛选比例曲线
+            if reachCurve[i][3] != 0:
+                if reachCurve[i][2] / reachCurve[i][3] <= pc_mob * (1 + buff) and reachCurve[i][2] / reachCurve[i][3] >= pc_mob * (1 - buff) \
+                        and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
+                        reachCurve[i][3] >= ott_mob * (1 - buff):
+                    reachCurve_filter.append(reachCurve[i])
+        curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
+        #print(curve_rows_filter)  # 筛选的行数
+        for i in range(1, curve_rows_filter - 1):
+            if reachCurve_filter[i][0] == city and reachCurve_filter[i + 1][0] == city:  # 2行均为目标城市
+                if reachCurve_filter[i + 1][a1] == cityDict[city][b1]:
+                    cityDict[city][b2] = reachCurve_filter[i + 1][a2]
+                    cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
+                    cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
+                    cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    break
+                elif reachCurve_filter[i][a1] < cityDict[city][b1] and reachCurve_filter[i + 1][a1] > cityDict[city][b1]:
+                    cityDict[city][b2] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][a2] - reachCurve_filter[i][a2]) \
+                                         / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                         reachCurve_filter[i][a2]
+                    # PC-imp
+                    cityDict[city]["所需PC-Imp"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][2] - reachCurve_filter[i][2]) \
+                                                 / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                 reachCurve_filter[i][2]
+                    # Mobile-imp
+                    cityDict[city]["所需Mobile-Imp"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][3] - reachCurve_filter[i][3]) \
+                                                     / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                     reachCurve_filter[i][3]
+                    # OTT-imp
+                    cityDict[city]["所需OTT-Imp"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][4] - reachCurve_filter[i][4]) \
+                                                  / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                  reachCurve_filter[i][4]
+                    break
+
 def aTob_find(a1, a2, b1, b2):
     # 根据指定目标内容推到实际情况;a:目标内容(int)，b：实际情况(str）;求b2
     for city in cityList:
@@ -216,7 +303,6 @@ def aTob_find(a1, a2, b1, b2):
                 elif reachCurve[i][a1] < cityDict[city][b1] and reachCurve[i + 1][a1] > cityDict[city][b1]:
                     cityDict[city][b2] = reachCurve[i + 1][a2]
                     break
-
 
 def aTob_scale_find(a1, a2, b1, b2, pc_mob, ott_mob, buff):
     # 根据指定目标内容推到实际情况;a:目标内容(int)，b：实际情况(str）;求b2
@@ -252,13 +338,48 @@ def aTob_scale_find(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
                     break
 
+def aTob_scale_find_exl(a1, a2, b1, b2, buff):
+    # 根据指定目标内容推到实际情况;a:目标内容(int)，b：实际情况(str）;求b2
+    # mob_pc: mob除以pc的系数（float); mob_ott：mob除以ott的系数(float);buff(float,ex:0.2,表示±20%)
+    # 对曲线列表进行数据排除,pc2,mobile3,ott4
+    global reachCurve_filter
+    global curve_rows_filter
 
+    #print(curve_rows_filter)  # 筛选的行数
+    for city in cityList:
+        reachCurve_filter = []
+        reachCurve_filter.append(reachCurve[0])  # 添加title
+        pc_mob = cityDict[city]["排期PC占比"] / cityDict[city]["排期Mobile占比"]
+        ott_mob = cityDict[city]["排期OTT占比"] / cityDict[city]["排期Mobile占比"]
+        for i in range(1, curve_rows):
+            # 筛选比例曲线
+            if reachCurve[i][3] != 0:
+                if reachCurve[i][2] / reachCurve[i][3] <= pc_mob * (1 + buff) and reachCurve[i][2] / reachCurve[i][
+                    3] >= pc_mob * (1 - buff) \
+                        and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
+                        reachCurve[i][3] >= ott_mob * (1 - buff):
+                    reachCurve_filter.append(reachCurve[i])
+        curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
+        for i in range(1, curve_rows_filter - 1):
+            if reachCurve_filter[i][0] == city and reachCurve_filter[i + 1][0] == city:  # 2行均为目标城市
+                if reachCurve_filter[i + 1][a1] == cityDict[city][b1]:
+                    cityDict[city][b2] = reachCurve_filter[i + 1][a2]
+                    cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
+                    cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
+                    cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    break
+                elif reachCurve_filter[i][a1] < cityDict[city][b1] and reachCurve_filter[i + 1][a1] > cityDict[city][b1]:
+                    cityDict[city][b2] = reachCurve_filter[i + 1][a2]
+                    cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
+                    cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
+                    cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    break
 
 def exlWrite():
     # 创建工作簿
     workbook = xlwt.Workbook(encoding='utf-8')
     # 创建sheet
-    out_sheet = workbook.add_sheet('demo', cell_overwrite_ok=True)
+    out_sheet = workbook.add_sheet('output', cell_overwrite_ok=True)
     # out_sheet.write(0, 0, "abc")
     for i in range(target_cols):
         out_sheet.write(0, i, titleList[i])
@@ -276,6 +397,23 @@ def exlWrite():
     options['parent'] = ui_top
     options['title'] = '另存为计算结果'
     workbook.save(tkinter.filedialog.asksaveasfilename(**file_opt))
+
+def showOut():
+    outStr = "实际1+%  |  实际3+%  |  目标1+%所需曝光  |  目标3+%所需曝光\n"\
+    + "所需PC-Imp  |  所需Mobile-Imp  |  所需OTT-Imp\n\n"
+    for city in cityList:
+        outStr = outStr + str(city)+ ("  |  ") + str("%.2f"%cityDict[city]["实际1+%"]) + str("  |  ") \
+                 + str("%.2f"%cityDict[city]["实际3+%"]) + str("  |  ") \
+                 + str("%.0f"%float(cityDict[city]["目标1+%所需曝光"]))+str("  |  ") \
+                 + str("%.0f"%float(cityDict[city]["目标3+%所需曝光"])) + str("\n         |  ") \
+                 + str("%.0f"%float(cityDict[city]["所需PC-Imp"])) +str("  |  ") \
+                 + str("%.0f"%float(cityDict[city]["所需Mobile-Imp"])) +str("  |  ") \
+                 + str("%.0f"%float(cityDict[city]["所需OTT-Imp"]))\
+                 + str("\n")
+
+    messagebox.showinfo(message=outStr)
+    pass
+
 
 ########################################################################################################################
 ########################################################################################################################
@@ -298,38 +436,65 @@ def calculateReach():
     # aTob_scale(7, 1, "目标3+%", "目标3+%所需曝光", 2 / 7, 1 / 7, 0.2)
     global workWell
     workWell = 0
+
     if device_radio.get() == 1:
-        try:
-            if int(e1.get()) + int(e2.get()) + int(e3.get()) <= 0 or int(e1.get()) < 0 or int(e2.get()) < 0 or int(
-                    e3.get()) < 0:
-                messagebox.showinfo(message="占比请填写正数，并保证总和大于0")
+        if percentage_radio.get() ==1:
+            try:
+                if int(e1.get()) + int(e2.get()) + int(e3.get()) <= 0 or int(e1.get()) < 0 or int(e2.get()) < 0 or int(
+                        e3.get()) < 0:
+                    messagebox.showinfo(message="占比请填写正数，并保证总和大于0")
+                    return 0
+            except:
+                messagebox.showinfo(message="占比请填写正整数")
                 return 0
-        except:
-            messagebox.showinfo(message="占比请填写正整数")
-            return 0
-        try:
-            if float(e4.get()) < 0:
+            try:
+                if float(e4.get()) < 0:
+                    messagebox.showinfo(message="浮动系数请填写正数")
+                    return 0
+            except:
                 messagebox.showinfo(message="浮动系数请填写正数")
                 return 0
-        except:
-            messagebox.showinfo(message="浮动系数请填写正数")
-            return 0
-        if ck1.get() == 1:#曝光求1+%
-            checkData( "排期Imp")
-            aTob_scale(1, 5, "排期Imp", "实际1+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
-            workWell = 1
-        if ck2.get() == 1:
-            checkData("排期Imp")
-            aTob_scale(1, 7, "排期Imp", "实际3+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
-            workWell = 1
-        if ck3.get() == 1:
-            checkData("目标1+%")
-            aTob_scale(5, 1, "目标1+%", "目标1+%所需曝光", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
-            workWell = 1
-        if ck4.get() == 1:
-            checkData( "目标3+%")
-            aTob_scale(7, 1, "目标3+%", "目标3+%所需曝光", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
-            workWell = 1
+            if ck1.get() == 1:#曝光求1+%
+                checkData( "排期Imp")
+                aTob_scale(1, 5, "排期Imp", "实际1+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
+                workWell = 1
+            if ck2.get() == 1:
+                checkData("排期Imp")
+                aTob_scale(1, 7, "排期Imp", "实际3+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
+                workWell = 1
+            if ck3.get() == 1:
+                checkData("目标1+%")
+                aTob_scale(5, 1, "目标1+%", "目标1+%所需曝光", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
+                workWell = 1
+            if ck4.get() == 1:
+                checkData( "目标3+%")
+                aTob_scale(7, 1, "目标3+%", "目标3+%所需曝光", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
+                workWell = 1
+        elif percentage_radio.get() ==2:#使用exl导入的比例
+            try:
+                if float(e4_1.get()) < 0:
+                    messagebox.showinfo(message="exl浮动系数请填写正数")
+                    return 0
+            except:
+                print(e4_1.get())
+                messagebox.showinfo(message="exl浮动系数请填写正数")
+                return 0
+            if ck1.get() == 1:#曝光求1+%
+                checkData( "排期Imp")
+                aTob_scale_exl(1, 5, "排期Imp", "实际1+%", float(e4_1.get()))
+                workWell = 1
+            if ck2.get() == 1:
+                checkData("排期Imp")
+                aTob_scale_exl(1, 7, "排期Imp", "实际3+%", float(e4_1.get()))
+                workWell = 1
+            if ck3.get() == 1:
+                checkData("目标1+%")
+                aTob_scale_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e4_1.get()))
+                workWell = 1
+            if ck4.get() == 1:
+                checkData( "目标3+%")
+                aTob_scale_exl(7, 1, "目标3+%", "目标3+%所需曝光", float(e4_1.get()))
+                workWell = 1
     elif device_radio.get() == 2:
         if ck1.get() == 1:#曝光求1+%
             checkData("排期Imp")
@@ -349,18 +514,25 @@ def calculateReach():
             workWell = 1
 
     if workWell == 1:
-        messagebox.showinfo(message="计算完成，请保存结果")
-        exlWrite()
+        if ck5.get()==0 and ck6.get()==0:
+            messagebox.showinfo(message="请选择一种输出方式")
+        if ck6.get()==1:
+            showOut()
+        if ck5.get()==1:
+            messagebox.showinfo(message="计算完成，请保存结果")
+            exlWrite()
+
     else:
         messagebox.showinfo(message="计算未完成，请确保文件准确")
 
 def findReach():
-        # 界面tkinter变量 device_radio ; ck1-4 ; e1-4;需要配合float()使用
-        # messagebox.showinfo(message= float(e1.get())+float(e2.get()))
-        # aTob_scale(7, 1, "目标3+%", "目标3+%所需曝光", 2 / 7, 1 / 7, 0.2)
-        global workWell
-        workWell = 0
-        if device_radio.get() == 1:
+    # 界面tkinter变量 device_radio ; ck1-4 ; e1-4;需要配合float()使用
+    # messagebox.showinfo(message= float(e1.get())+float(e2.get()))
+    # aTob_scale(7, 1, "目标3+%", "目标3+%所需曝光", 2 / 7, 1 / 7, 0.2)
+    global workWell
+    workWell = 0
+    if device_radio.get() == 1:
+        if percentage_radio.get() == 1:
             try:
                 if int(e1.get()) + int(e2.get()) + int(e3.get()) <= 0 or int(e1.get()) < 0 or int(e2.get()) < 0 or int(
                         e3.get()) < 0:
@@ -396,7 +568,36 @@ def findReach():
                 aTob_scale_find(7, 1, "目标3+%", "目标3+%所需曝光", float(e1.get()) / float(e2.get()),
                            float(e3.get()) / float(e2.get()), float(e4.get()))
                 workWell = 1
-        elif device_radio.get() == 2:
+        elif percentage_radio.get() ==2:#使用exl导入的比例
+            try:
+                if float(e4_1.get()) < 0:
+                    messagebox.showinfo(message="exl浮动系数请填写正数")
+                    return 0
+            except:
+                print(e4_1.get())
+                messagebox.showinfo(message="exl浮动系数请填写正数")
+                return 0
+            if ck1.get() == 1:  # 曝光求1+%
+                checkData("排期Imp")
+                aTob_scale_find_exl(1, 5, "排期Imp", "实际1+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()),
+                           float(e4.get()))
+                workWell = 1
+            if ck2.get() == 1:
+                checkData("排期Imp")
+                aTob_scale_find_exl(1, 7, "排期Imp", "实际3+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()),
+                           float(e4.get()))
+                workWell = 1
+            if ck3.get() == 1:
+                checkData("目标1+%")
+                aTob_scale_find_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e1.get()) / float(e2.get()),
+                           float(e3.get()) / float(e2.get()), float(e4.get()))
+                workWell = 1
+            if ck4.get() == 1:
+                checkData("目标3+%")
+                aTob_scale_find_exl(7, 1, "目标3+%", "目标3+%所需曝光", float(e1.get()) / float(e2.get()),
+                           float(e3.get()) / float(e2.get()), float(e4.get()))
+                workWell = 1
+    elif device_radio.get() == 2:
             if ck1.get() == 1:  # 曝光求1+%
                 checkData("排期Imp")
                 aTob_find(1, 5, "排期Imp", "实际1+%")
@@ -414,11 +615,16 @@ def findReach():
                 aTob_find(7, 1, "目标3+%", "目标3+%所需曝光")
                 workWell = 1
 
-        if workWell == 1:
+    if workWell == 1:
+        if ck5.get() == 0 and ck6.get() == 0:
+            messagebox.showinfo(message="请选择一种输出方式")
+        if ck6.get() == 1:
+            showOut()
+        if ck5.get() == 1:
             messagebox.showinfo(message="计算完成，请保存结果")
             exlWrite()
-        else:
-            messagebox.showinfo(message="计算未完成，请确保文件准确")
+    else:
+        messagebox.showinfo(message="计算未完成，请确保文件准确")
 
 # test code
 # exlRead()
@@ -446,7 +652,7 @@ label_top.grid(row=0, column=0)
 #label_sign = Label(ui_top, text="Ver0.1 by Char", height=3, width=20, anchor="sw")
 #label_sign.grid(row=8, column=1)
 label_end = Label(ui_top, text="", width=3)
-label_end.grid(row=9, column=4)
+label_end.grid(row=10, column=4)
 '''
 # 第1行-导入excel并生成计算list及dict
 button_vbaDownload = Button(ui_top, text="曲线制作表下载", width=20, command=lambda: vbaDownload())
@@ -485,10 +691,18 @@ check_3 = Checkbutton(ui_top, text='已知1+%求曝光', variable=ck3, onvalue=1
 ck4 = IntVar()
 ck4.set(0)
 check_4 = Checkbutton(ui_top, text='已知3+%求曝光', variable=ck4, onvalue=1, offvalue=0, height=3, width=20)
+ck5 = IntVar()
+ck5.set(1)
+check_5 = Checkbutton(ui_top, text='导出xls表格 ', variable=ck5, onvalue=1, offvalue=0, height=3, width=20)
+ck6 = IntVar()
+ck6.set(0)
+check_6 = Checkbutton(ui_top, text='直接展示结果', variable=ck6, onvalue=1, offvalue=0, height=3, width=20)
 check_1.grid(row=4, column=1)
 check_2.grid(row=5, column=1)
 check_3.grid(row=6, column=1)
 check_4.grid(row=7, column=1)
+check_5.grid(row=8, column=1)
+check_6.grid(row=9, column=1)
 # 参数设定
 '''
 label_pc = Label(ui_top, text="", height=3, width=20)
@@ -509,17 +723,25 @@ label_ott1.grid(row=6, column=3)
 label_buff1 = Label(ui_top, text="", width=20)
 label_buff1.grid(row=7, column=3)
 '''
+global percentage_radio
+percentage_radio = IntVar()
+percentage_radio.set(1)
+radio_exe = Radiobutton(ui_top, text='直接输入比例', variable=percentage_radio, value=1, width=20,command=lambda: input_exe())
+radio_exl = Radiobutton(ui_top, text='excel导入比例', variable=percentage_radio, value=2, width=20,command=lambda: input_exl())
+radio_exe.grid(row=4, column=2)
+radio_exl.grid(row=4, column=3)
+global label_pc,label_mob,label_ott,label_buff
 label_pc = Label(ui_top, text="PC曝光占比", height=3, width=20)
-label_pc.grid(row=4, column=2)
+label_pc.grid(row=5, column=2)
 label_mob = Label(ui_top, text="Mobile曝光占比", width=20)
-label_mob.grid(row=5, column=2)
+label_mob.grid(row=6, column=2)
 label_ott = Label(ui_top, text="OTT曝光占比", width=20)
-label_ott.grid(row=6, column=2)
-label_buff = Label(ui_top, text="设备比例浮动系数", width=20)
-label_buff.grid(row=7, column=2)
+label_ott.grid(row=7, column=2)
+label_buff = Label(ui_top, text="设备比例浮动系数", width=20, height=3)
+label_buff.grid(row=8, column=2)
 
 # e1 = StringVar()
-global e1,e2,e3,e4
+global e1,e2,e3,e4,e4_1
 e1 = Variable()
 e2 = Variable()
 e3 = Variable()
@@ -529,22 +751,24 @@ e2.set("填写正整数，如0-100")
 e3.set("填写正整数，如0-100")
 e4.set("填写小数，如0.0-1.0")
 entry_pc = Entry(ui_top, textvariable=e1, width=20)
-entry_pc.grid(row=4, column=3)
+entry_pc.grid(row=5, column=3)
 entry_mob = Entry(ui_top, textvariable=e2, width=20)
-entry_mob.grid(row=5, column=3)
+entry_mob.grid(row=6, column=3)
 entry_ott = Entry(ui_top, textvariable=e3, width=20)
-entry_ott.grid(row=6, column=3)
+entry_ott.grid(row=7, column=3)
 entry_buff = Entry(ui_top, textvariable=e4, width=20)
-entry_buff.grid(row=7, column=3)
+entry_buff.grid(row=8, column=3)
+
+
 
 # var.get()，判断是否选中，返回0或1
 # 运行button
 button_find = Button(ui_top, text="查找Reach", height=3, width=20, command=lambda: findReach())
-button_find.grid(row=8, column=2)
+button_find.grid(row=9, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
-button_calculate.grid(row=8, column=3)
+button_calculate.grid(row=9, column=3)
 # 进入消息循环
 ui_top.title('OTV项目Reach预估工具 Ver0.22')
-label_sign = Label(ui_top, text="Ver0.2 by Char", height=3, width=20, anchor="sw")
-label_sign.grid(row=8, column=1)
+label_sign = Label(ui_top, text="Ver0.3 by Char", height=3, width=20, anchor="sw")
+label_sign.grid(row=10, column=1)
 ui_top.mainloop()
