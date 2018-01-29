@@ -768,7 +768,7 @@ button_find.grid(row=9, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
 button_calculate.grid(row=9, column=3)
 # 进入消息循环
-ui_top.title('OTV项目Reach预估工具 Ver0.22')
+ui_top.title('OTV项目Reach预估工具 Ver0.3')
 label_sign = Label(ui_top, text="Ver0.3 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=10, column=1)
 ui_top.mainloop()
