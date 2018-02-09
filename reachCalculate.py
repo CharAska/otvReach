@@ -183,11 +183,16 @@ def aTob(a1, a2, b1, b2):
             if reachCurve[i][0] == city and reachCurve[i + 1][0] == city:  # 2行均为目标城市
                 if reachCurve[i + 1][a1] == cityDict[city][b1]:
                     cityDict[city][b2] = reachCurve[i + 1][a2]
+                    cityDict[city]["iGRP"] = reachCurve[i + 1][8]
                     break
                 elif reachCurve[i][a1] < cityDict[city][b1] and reachCurve[i + 1][a1] > cityDict[city][b1]:
                     cityDict[city][b2] = (cityDict[city][b1] - reachCurve[i][a1]) * (
                     reachCurve[i + 1][a2] - reachCurve[i][a2]) \
                                          / (reachCurve[i + 1][a1] - reachCurve[i][a1]) + reachCurve[i][a2]
+                    cityDict[city]["iGRP"] = (cityDict[city][b1] - reachCurve[i][a1]) * (
+                    reachCurve[i + 1][8] - reachCurve[i][8]) \
+                                                 / (reachCurve[i + 1][a1] - reachCurve[i][a1]) + \
+                                                 reachCurve[i][8]
                     break
 
 def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
@@ -216,6 +221,10 @@ def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
                     cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    cityDict[city]["iGRP"] = reachCurve_filter[i + 1][8]  #
+                    cityDict[city]["iGRP-PC"] = reachCurve_filter[i + 1][9]
+                    cityDict[city]["iGRP-Mobile"] = reachCurve_filter[i + 1][10]
+                    cityDict[city]["iGRP-OTT"] = reachCurve_filter[i + 1][11]
                     break
                 elif reachCurve_filter[i][a1] < cityDict[city][b1] and reachCurve_filter[i + 1][a1] > cityDict[city][
                     b1]:
@@ -238,6 +247,26 @@ def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     reachCurve_filter[i + 1][4] - reachCurve_filter[i][4]) \
                                                   / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
                                                   reachCurve_filter[i][4]
+                    # iGRP
+                    cityDict[city]["iGRP"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][8] - reachCurve_filter[i][8]) \
+                                                 / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                 reachCurve_filter[i][8]
+                    # Mobile-iGRP
+                    cityDict[city]["iGRP-PC"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][9] - reachCurve_filter[i][9]) \
+                                                     / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                     reachCurve_filter[i][9]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-Mobile"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][10] - reachCurve_filter[i][10]) \
+                                                  / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                  reachCurve_filter[i][10]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-OTT"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                    reachCurve_filter[i + 1][11] - reachCurve_filter[i][11]) \
+                                                  / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                  reachCurve_filter[i][11]
                     break
 
 def aTob_scale_exl(a1, a2, b1, b2, buff):
@@ -269,6 +298,10 @@ def aTob_scale_exl(a1, a2, b1, b2, buff):
                     cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
                     cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    cityDict[city]["iGRP"] = reachCurve_filter[i + 1][8]  #
+                    cityDict[city]["iGRP-PC"] = reachCurve_filter[i + 1][9]
+                    cityDict[city]["iGRP-Mobile"] = reachCurve_filter[i + 1][10]
+                    cityDict[city]["iGRP-OTT"] = reachCurve_filter[i + 1][11]
                     break
                 elif reachCurve_filter[i][a1] < cityDict[city][b1] and reachCurve_filter[i + 1][a1] > cityDict[city][b1]:
                     cityDict[city][b2] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
@@ -290,6 +323,26 @@ def aTob_scale_exl(a1, a2, b1, b2, buff):
                     reachCurve_filter[i + 1][4] - reachCurve_filter[i][4]) \
                                                   / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
                                                   reachCurve_filter[i][4]
+                    # iGRP
+                    cityDict[city]["iGRP"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                        reachCurve_filter[i + 1][8] - reachCurve_filter[i][8]) \
+                                             / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                             reachCurve_filter[i][8]
+                    # Mobile-iGRP
+                    cityDict[city]["iGRP-PC"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                        reachCurve_filter[i + 1][9] - reachCurve_filter[i][9]) \
+                                                / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                reachCurve_filter[i][9]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-Mobile"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                        reachCurve_filter[i + 1][10] - reachCurve_filter[i][10]) \
+                                                    / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                    reachCurve_filter[i][10]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-OTT"] = (cityDict[city][b1] - reachCurve_filter[i][a1]) * (
+                        reachCurve_filter[i + 1][11] - reachCurve_filter[i][11]) \
+                                                 / (reachCurve_filter[i + 1][a1] - reachCurve_filter[i][a1]) + \
+                                                 reachCurve_filter[i][11]
                     break
 
 def aTob_find(a1, a2, b1, b2):
@@ -299,9 +352,11 @@ def aTob_find(a1, a2, b1, b2):
             if reachCurve[i][0] == city and reachCurve[i + 1][0] == city:  # 2行均为目标城市
                 if reachCurve[i + 1][a1] == cityDict[city][b1]:
                     cityDict[city][b2] = reachCurve[i + 1][a2]
+                    cityDict[city]["iGRP"] = reachCurve[i + 1][8]
                     break
                 elif reachCurve[i][a1] < cityDict[city][b1] and reachCurve[i + 1][a1] > cityDict[city][b1]:
                     cityDict[city][b2] = reachCurve[i + 1][a2]
+                    cityDict[city]["iGRP"] = reachCurve[i + 1][8]
                     break
 
 def aTob_scale_find(a1, a2, b1, b2, pc_mob, ott_mob, buff):
@@ -330,12 +385,24 @@ def aTob_scale_find(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
                     cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    cityDict[city]["iGRP"] = reachCurve_filter[i + 1][8]  #
+                    cityDict[city]["iGRP-PC"] = reachCurve_filter[i + 1][9]
+                    cityDict[city]["iGRP-Mobile"] = reachCurve_filter[i + 1][10]
+                    cityDict[city]["iGRP-OTT"] = reachCurve_filter[i + 1][11]
                     break
                 elif reachCurve_filter[i][a1] < cityDict[city][b1] and reachCurve_filter[i + 1][a1] > cityDict[city][b1]:
                     cityDict[city][b2] = reachCurve_filter[i + 1][a2]
                     cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
                     cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    # iGRP
+                    cityDict[city]["iGRP"] = reachCurve_filter[i + 1][8]
+                    # Mobile-iGRP
+                    cityDict[city]["iGRP-PC"] =reachCurve_filter[i + 1][9]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-Mobile"] = reachCurve_filter[i + 1][10]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-OTT"] = reachCurve_filter[i + 1][11]
                     break
 
 def aTob_scale_find_exl(a1, a2, b1, b2, buff):
@@ -367,12 +434,24 @@ def aTob_scale_find_exl(a1, a2, b1, b2, buff):
                     cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
                     cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    cityDict[city]["iGRP"] = reachCurve_filter[i + 1][8]  #
+                    cityDict[city]["iGRP-PC"] = reachCurve_filter[i + 1][9]
+                    cityDict[city]["iGRP-Mobile"] = reachCurve_filter[i + 1][10]
+                    cityDict[city]["iGRP-OTT"] = reachCurve_filter[i + 1][11]
                     break
                 elif reachCurve_filter[i][a1] < cityDict[city][b1] and reachCurve_filter[i + 1][a1] > cityDict[city][b1]:
                     cityDict[city][b2] = reachCurve_filter[i + 1][a2]
                     cityDict[city]["所需PC-Imp"] = reachCurve_filter[i + 1][2]  # pc
                     cityDict[city]["所需Mobile-Imp"] = reachCurve_filter[i + 1][3]  # mob
                     cityDict[city]["所需OTT-Imp"] = reachCurve_filter[i + 1][4]  # ott
+                    # iGRP
+                    cityDict[city]["iGRP"] = reachCurve_filter[i + 1][8]
+                    # Mobile-iGRP
+                    cityDict[city]["iGRP-PC"] =reachCurve_filter[i + 1][9]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-Mobile"] = reachCurve_filter[i + 1][10]
+                    # OTT-iGRP
+                    cityDict[city]["iGRP-OTT"] = reachCurve_filter[i + 1][11]
                     break
 
 def exlWrite():
@@ -764,8 +843,7 @@ button_find.grid(row=9, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
 button_calculate.grid(row=9, column=3)
 # 进入消息循环
-ui_top.title('OTV项目Reach预估工具 Ver0.32')
-label_sign = Label(ui_top, text="Ver0.32 by Char", height=3, width=20, anchor="sw")
+ui_top.title('OTV项目Reach预估工具 Ver0.4')
+label_sign = Label(ui_top, text="Ver0.4 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=10, column=1)
 ui_top.mainloop()
-#0.32
