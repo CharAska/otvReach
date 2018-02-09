@@ -768,3 +768,4 @@ ui_top.title('OTV项目Reach预估工具 Ver0.32')
 label_sign = Label(ui_top, text="Ver0.32 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=10, column=1)
 ui_top.mainloop()
+#0.32
