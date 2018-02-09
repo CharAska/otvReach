@@ -579,23 +579,19 @@ def findReach():
                 return 0
             if ck1.get() == 1:  # 曝光求1+%
                 checkData("排期Imp")
-                aTob_scale_find_exl(1, 5, "排期Imp", "实际1+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()),
-                           float(e4.get()))
+                aTob_scale_find_exl(1, 5, "排期Imp", "实际1+%",float(e4_1.get()))
                 workWell = 1
             if ck2.get() == 1:
                 checkData("排期Imp")
-                aTob_scale_find_exl(1, 7, "排期Imp", "实际3+%", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()),
-                           float(e4.get()))
+                aTob_scale_find_exl(1, 7, "排期Imp", "实际3+%",float(e4_1.get()))
                 workWell = 1
             if ck3.get() == 1:
                 checkData("目标1+%")
-                aTob_scale_find_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e1.get()) / float(e2.get()),
-                           float(e3.get()) / float(e2.get()), float(e4.get()))
+                aTob_scale_find_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e4_1.get()))
                 workWell = 1
             if ck4.get() == 1:
                 checkData("目标3+%")
-                aTob_scale_find_exl(7, 1, "目标3+%", "目标3+%所需曝光", float(e1.get()) / float(e2.get()),
-                           float(e3.get()) / float(e2.get()), float(e4.get()))
+                aTob_scale_find_exl(7, 1, "目标3+%", "目标3+%所需曝光",float(e4_1.get()))
                 workWell = 1
     elif device_radio.get() == 2:
             if ck1.get() == 1:  # 曝光求1+%
@@ -768,7 +764,7 @@ button_find.grid(row=9, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
 button_calculate.grid(row=9, column=3)
 # 进入消息循环
-ui_top.title('OTV项目Reach预估工具 Ver0.3')
-label_sign = Label(ui_top, text="Ver0.3 by Char", height=3, width=20, anchor="sw")
+ui_top.title('OTV项目Reach预估工具 Ver0.32')
+label_sign = Label(ui_top, text="Ver0.32 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=10, column=1)
 ui_top.mainloop()
