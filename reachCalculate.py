@@ -211,7 +211,7 @@ def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                     reachCurve[i][3] >= ott_mob * (1 - buff):
                 reachCurve_filter.append(reachCurve[i])
-        else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+        elif reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
             #曲线为0时添加
             reachCurve_filter.append(reachCurve[i])
     curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
@@ -292,7 +292,7 @@ def aTob_scale_exl(a1, a2, b1, b2, buff):
                         and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                         reachCurve[i][3] >= ott_mob * (1 - buff):
                     reachCurve_filter.append(reachCurve[i])
-            else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+            elif reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
                 # 曲线为0时添加
                 reachCurve_filter.append(reachCurve[i])
         curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
@@ -381,7 +381,7 @@ def aTob_scale_find(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                     reachCurve[i][3] >= ott_mob * (1 - buff):
                 reachCurve_filter.append(reachCurve[i])
-        else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+        elif reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
             #曲线为0时添加
             reachCurve_filter.append(reachCurve[i])
     curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
@@ -435,7 +435,7 @@ def aTob_scale_find_exl(a1, a2, b1, b2, buff):
                         and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                         reachCurve[i][3] >= ott_mob * (1 - buff):
                     reachCurve_filter.append(reachCurve[i])
-            else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+            elif reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
                 # 曲线为0时添加
                 reachCurve_filter.append(reachCurve[i])
         curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
