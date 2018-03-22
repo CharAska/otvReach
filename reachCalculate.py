@@ -211,6 +211,9 @@ def aTob_scale(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                     reachCurve[i][3] >= ott_mob * (1 - buff):
                 reachCurve_filter.append(reachCurve[i])
+        else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+            #曲线为0时添加
+            reachCurve_filter.append(reachCurve[i])
     curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
     print(curve_rows_filter)  # 筛选的行数
     for city in cityList:
@@ -289,6 +292,9 @@ def aTob_scale_exl(a1, a2, b1, b2, buff):
                         and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                         reachCurve[i][3] >= ott_mob * (1 - buff):
                     reachCurve_filter.append(reachCurve[i])
+            else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+                # 曲线为0时添加
+                reachCurve_filter.append(reachCurve[i])
         curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
         #print(curve_rows_filter)  # 筛选的行数
         for i in range(1, curve_rows_filter - 1):
@@ -375,6 +381,9 @@ def aTob_scale_find(a1, a2, b1, b2, pc_mob, ott_mob, buff):
                     and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                     reachCurve[i][3] >= ott_mob * (1 - buff):
                 reachCurve_filter.append(reachCurve[i])
+        else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+            #曲线为0时添加
+            reachCurve_filter.append(reachCurve[i])
     curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
     #print(curve_rows_filter)  # 筛选的行数
     for city in cityList:
@@ -426,6 +435,9 @@ def aTob_scale_find_exl(a1, a2, b1, b2, buff):
                         and reachCurve[i][4] / reachCurve[i][3] <= ott_mob * (1 + buff) and reachCurve[i][4] / \
                         reachCurve[i][3] >= ott_mob * (1 - buff):
                     reachCurve_filter.append(reachCurve[i])
+            else if reachCurve[i][2] + reachCurve[i][3] + reachCurve[i][4] == 0:
+                # 曲线为0时添加
+                reachCurve_filter.append(reachCurve[i])
         curve_rows_filter = len(reachCurve_filter)  # 获取筛选表行数
         for i in range(1, curve_rows_filter - 1):
             if reachCurve_filter[i][0] == city and reachCurve_filter[i + 1][0] == city:  # 2行均为目标城市
@@ -843,7 +855,7 @@ button_find.grid(row=9, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
 button_calculate.grid(row=9, column=3)
 # 进入消息循环
-ui_top.title('OTV项目Reach预估工具 Ver0.4')
-label_sign = Label(ui_top, text="Ver0.4 by Char", height=3, width=20, anchor="sw")
+ui_top.title('OTV项目Reach预估工具 Ver0.41')
+label_sign = Label(ui_top, text="Ver0.41 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=10, column=1)
 ui_top.mainloop()
