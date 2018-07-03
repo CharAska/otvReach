@@ -36,87 +36,48 @@ def chooseFile():
     label_fileName.config(text=re.sub(r".*\/", "", exlFile, count=0))
 
 def mod_mix():
-    label_pc = Label(ui_top, text="", height=3, width=20)
-    label_pc.grid(row=4, column=2)
-    label_mob = Label(ui_top, text="", width=20)
-    label_mob.grid(row=5, column=2)
-    label_ott = Label(ui_top, text="", width=20)
-    label_ott.grid(row=6, column=2)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=7, column=2)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=8, column=2)
-
-    label_pc = Label(ui_top, text="", height=3, width=20)
-    label_pc.grid(row=4, column=3)
-    label_mob = Label(ui_top, text="", width=20)
-    label_mob.grid(row=5, column=3)
-    label_ott = Label(ui_top, text="", width=20)
-    label_ott.grid(row=6, column=3)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=7, column=3)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=8, column=3)
+    radio_exe.grid_remove()
+    radio_exl.grid_remove()
+    label_pc.grid_remove()
+    label_mob.grid_remove()
+    label_ott.grid_remove()
+    label_buff.grid_remove()
+    entry_pc.grid_remove()
+    entry_mob.grid_remove()
+    entry_ott.grid_remove()
+    entry_buff.grid_remove()
 
 def mod_scale():
-    percentage_radio = IntVar()
-    percentage_radio.set(1)
-    radio_exe = Radiobutton(ui_top, text='直接输入比例', variable=percentage_radio, value=1, width=20,command=lambda: input_exe())
-    radio_exl = Radiobutton(ui_top, text='excel导入比例', variable=percentage_radio, value=2, width=20,command=lambda: input_exl())
     radio_exe.grid(row=4, column=2)
     radio_exl.grid(row=4, column=3)
 
 def input_exe():
-    label_pc = Label(ui_top, text="PC曝光占比", height=3, width=20)
+    label_buff.grid_remove()
+    entry_buff.grid_remove()
     label_pc.grid(row=5, column=2)
-    label_mob = Label(ui_top, text="Mobile曝光占比", width=20)
     label_mob.grid(row=6, column=2)
-    label_ott = Label(ui_top, text="OTT曝光占比", width=20)
     label_ott.grid(row=7, column=2)
-    label_buff = Label(ui_top, text="设备比例浮动系数", width=20, height=3)
     label_buff.grid(row=8, column=2)
-
-    # e1 = StringVar()
-    global e1,e2,e3,e4,ck_excel
-    e1 = Variable()
-    e2 = Variable()
-    e3 = Variable()
-    e4 = Variable()
-    e1.set("填写正整数，如0-100")
-    e2.set("填写正整数，如0-100")
-    e3.set("填写正整数，如0-100")
-    e4.set("填写小数，如0.0-1.0")
-    entry_pc = Entry(ui_top, textvariable=e1, width=20)
     entry_pc.grid(row=5, column=3)
-    entry_mob = Entry(ui_top, textvariable=e2, width=20)
     entry_mob.grid(row=6, column=3)
-    entry_ott = Entry(ui_top, textvariable=e3, width=20)
     entry_ott.grid(row=7, column=3)
-    entry_buff = Entry(ui_top, textvariable=e4, width=20)
     entry_buff.grid(row=8, column=3)
 
 def input_exl():
-    global e4_1
-    label_buff = Label(ui_top, text="设备比例浮动系数", width=20, height=3)
+
+    label_pc.grid_remove()
+    label_mob.grid_remove()
+    label_ott.grid_remove()
+    label_buff.grid_remove()
+    entry_pc.grid_remove()
+    entry_mob.grid_remove()
+    entry_ott.grid_remove()
+    entry_buff.grid_remove()
+
     label_buff.grid(row=5, column=2)
-    e4_1 = Variable()
-    e4_1.set("填写小数，如0.0-1.0")
-    entry_buff = Entry(ui_top, textvariable=e4_1, width=20)
     entry_buff.grid(row=5, column=3)
 
-    label_ott = Label(ui_top, text="", width=20)
-    label_ott.grid(row=6, column=2)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=7, column=2)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=8, column=2)
 
-    label_ott = Label(ui_top, text="", width=20)
-    label_ott.grid(row=6, column=3)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=7, column=3)
-    label_buff = Label(ui_top, text="", width=20)
-    label_buff.grid(row=8, column=3)
 
 def exlRead():
     # 完成后需要修改地址，可改成导入方式
@@ -529,7 +490,9 @@ def calculateReach():
     workWell = 0
 
     if device_radio.get() == 1:
+        #messagebox.showinfo(message=str(device_radio.get()) +"  "+ str(percentage_radio.get()))#if debug
         if percentage_radio.get() ==1:
+            #messagebox.showinfo(message="run 1-1")  # if debug
             try:
                 if int(e1.get()) + int(e2.get()) + int(e3.get()) <= 0 or int(e1.get()) < 0 or int(e2.get()) < 0 or int(
                         e3.get()) < 0:
@@ -562,31 +525,33 @@ def calculateReach():
                 aTob_scale(7, 1, "目标3+%", "目标3+%所需曝光", float(e1.get()) / float(e2.get()), float(e3.get()) / float(e2.get()), float(e4.get()))
                 workWell = 1
         elif percentage_radio.get() ==2:#使用exl导入的比例
+            #messagebox.showinfo(message="run 1-2")  # if debug
             try:
-                if float(e4_1.get()) < 0:
+                if float(e4.get()) < 0:
                     messagebox.showinfo(message="exl浮动系数请填写正数")
                     return 0
             except:
-                print(e4_1.get())
+                print(e4.get())
                 messagebox.showinfo(message="exl浮动系数请填写正数")
                 return 0
             if ck1.get() == 1:#曝光求1+%
                 checkData( "排期Imp")
-                aTob_scale_exl(1, 5, "排期Imp", "实际1+%", float(e4_1.get()))
+                aTob_scale_exl(1, 5, "排期Imp", "实际1+%", float(e4.get()))
                 workWell = 1
             if ck2.get() == 1:
                 checkData("排期Imp")
-                aTob_scale_exl(1, 7, "排期Imp", "实际3+%", float(e4_1.get()))
+                aTob_scale_exl(1, 7, "排期Imp", "实际3+%", float(e4.get()))
                 workWell = 1
             if ck3.get() == 1:
                 checkData("目标1+%")
-                aTob_scale_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e4_1.get()))
+                aTob_scale_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e4.get()))
                 workWell = 1
             if ck4.get() == 1:
                 checkData( "目标3+%")
-                aTob_scale_exl(7, 1, "目标3+%", "目标3+%所需曝光", float(e4_1.get()))
+                aTob_scale_exl(7, 1, "目标3+%", "目标3+%所需曝光", float(e4.get()))
                 workWell = 1
     elif device_radio.get() == 2:
+        messagebox.showinfo(message="run 2")  # if debug
         if ck1.get() == 1:#曝光求1+%
             checkData("排期Imp")
             aTob(1, 5, "排期Imp", "实际1+%")
@@ -661,28 +626,28 @@ def findReach():
                 workWell = 1
         elif percentage_radio.get() ==2:#使用exl导入的比例
             try:
-                if float(e4_1.get()) < 0:
+                if float(e4.get()) < 0:
                     messagebox.showinfo(message="exl浮动系数请填写正数")
                     return 0
             except:
-                print(e4_1.get())
+                print(e4.get())
                 messagebox.showinfo(message="exl浮动系数请填写正数")
                 return 0
             if ck1.get() == 1:  # 曝光求1+%
                 checkData("排期Imp")
-                aTob_scale_find_exl(1, 5, "排期Imp", "实际1+%",float(e4_1.get()))
+                aTob_scale_find_exl(1, 5, "排期Imp", "实际1+%",float(e4.get()))
                 workWell = 1
             if ck2.get() == 1:
                 checkData("排期Imp")
-                aTob_scale_find_exl(1, 7, "排期Imp", "实际3+%",float(e4_1.get()))
+                aTob_scale_find_exl(1, 7, "排期Imp", "实际3+%",float(e4.get()))
                 workWell = 1
             if ck3.get() == 1:
                 checkData("目标1+%")
-                aTob_scale_find_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e4_1.get()))
+                aTob_scale_find_exl(5, 1, "目标1+%", "目标1+%所需曝光", float(e4.get()))
                 workWell = 1
             if ck4.get() == 1:
                 checkData("目标3+%")
-                aTob_scale_find_exl(7, 1, "目标3+%", "目标3+%所需曝光",float(e4_1.get()))
+                aTob_scale_find_exl(7, 1, "目标3+%", "目标3+%所需曝光",float(e4.get()))
                 workWell = 1
     elif device_radio.get() == 2:
             if ck1.get() == 1:  # 曝光求1+%
@@ -828,7 +793,7 @@ label_buff = Label(ui_top, text="设备比例浮动系数", width=20, height=3)
 label_buff.grid(row=8, column=2)
 
 # e1 = StringVar()
-global e1,e2,e3,e4,e4_1
+global e1,e2,e3,e4
 e1 = Variable()
 e2 = Variable()
 e3 = Variable()
@@ -855,7 +820,7 @@ button_find.grid(row=9, column=2)
 button_calculate = Button(ui_top, text="预估计算", height=3, width=20, command=lambda: calculateReach())
 button_calculate.grid(row=9, column=3)
 # 进入消息循环
-ui_top.title('OTV项目Reach预估工具 Ver0.41')
-label_sign = Label(ui_top, text="Ver0.41 by Char", height=3, width=20, anchor="sw")
+ui_top.title('OTV项目Reach预估工具 Ver0.42')
+label_sign = Label(ui_top, text="Ver0.42 by Char", height=3, width=20, anchor="sw")
 label_sign.grid(row=10, column=1)
 ui_top.mainloop()
